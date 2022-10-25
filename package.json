@@ -1,7 +1,7 @@
 {
   "name": "@northle/cli",
   "version": "1.0.0-alpha.1",
-  "description": "CLI tool for Northle JS",
+  "description": "CLI tool for Northle JS framework",
   "type": "module",
   "repository": {
     "type": "git",
