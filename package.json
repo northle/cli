@@ -1,0 +1,43 @@
+{
+  "name": "@northle/cli",
+  "version": "1.0.0-alpha.1",
+  "description": "CLI tool for Northle JS",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/northle/cli.git"
+  },
+  "author": "Dominik Rajkowski",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/northle/cli/issues"
+  },
+  "engines": {
+    "node": ">=18.3.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "bin": "./bin/main.js",
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "format": "prettier \"**/*.ts\" --ignore-path ./.prettierignore --write",
+    "lint": "eslint .",
+    "start": "node --experimental-specifier-resolution=node --no-warnings ./dist/main"
+  },
+  "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^3.4.0",
+    "@types/node": "^18.11.5",
+    "@types/prompts": "^2.0.14",
+    "@typescript-eslint/eslint-plugin": "^5.41.0",
+    "@typescript-eslint/parser": "^5.41.0",
+    "eslint": "^8.26.0",
+    "prettier": "^2.7.1",
+    "typescript": "^4.8.4"
+  },
+  "dependencies": {
+    "chalk": "^5.1.2",
+    "prompts": "^2.4.2"
+  }
+}
