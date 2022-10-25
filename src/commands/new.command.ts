@@ -4,6 +4,11 @@ import { Command } from '../decorators/command.decorator';
 
 @Command({
   signature: 'new',
+  parameters: {
+    projectName: {
+      type: 'string',
+    },
+  },
 })
 export class NewCommand {
   public async handle(projectName: string): Promise<void> {
