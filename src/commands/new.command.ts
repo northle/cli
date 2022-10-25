@@ -9,6 +9,6 @@ export class NewCommand {
   public async handle(projectName: string): Promise<void> {
     logInfo('Running database migrations...');
 
-    runCommand(`northle new ${projectName}`, { showOutput: true });
+    runCommand(`npm create @northle ${projectName}`, { showOutput: true });
   }
 }
