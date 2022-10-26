@@ -5,6 +5,7 @@ import { Constructor } from './interfaces/constructor.interface';
 import { Command } from './interfaces/command.interface';
 import { Parameter } from './interfaces/parameter.interface';
 import { NewCommand } from './commands/new.command';
+import { VersionCommand } from './commands/version.command';
 
 process.on('uncaughtException', (err: Error) => {
   logError(err.message);
@@ -14,6 +15,7 @@ process.on('uncaughtException', (err: Error) => {
 
 const commands: Constructor<Command>[] = [
   NewCommand,
+  VersionCommand,
 ];
 
 let isCommandValid = false;
