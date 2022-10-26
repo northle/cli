@@ -18,7 +18,11 @@
   "publishConfig": {
     "access": "public"
   },
-  "bin": "./bin/main.js",
+  "bin": {
+    "north": "./bin/main.js",
+    "northle": "./bin/main.js",
+    "nt": "./bin/main.js"
+  },
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc --watch",
