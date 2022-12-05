@@ -1,6 +1,9 @@
 /.fleet
 /.idea
+/.npm
 /.vscode
+/.yarn/cache
+/coverage
 /dist
 /node_modules
 *.log

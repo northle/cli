@@ -1,6 +1,3 @@
-import { existsSync, unlinkSync } from 'node:fs';
-import { tmpdir } from 'node:os';
-
 export const setupStdin = (callback?: () => void) => {
   if (process.stdin.setRawMode) {
     process.stdin.setRawMode(true);
@@ -22,12 +19,6 @@ export const setupStdin = (callback?: () => void) => {
     }
 
     if ([...Object.values(exitKeys)].includes(key)) {
-      const tempPath = `${tmpdir()}/northle`;
-
-      if (existsSync(tempPath)) {
-        unlinkSync(tempPath);
-      }
-
       callback?.();
 
       process.exit();
