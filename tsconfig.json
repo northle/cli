@@ -17,7 +17,7 @@
     "forceConsistentCasingInFileNames": true,
     "allowSyntheticDefaultImports": true,
     "lib": [
-      "ES2022",
+      "ESNext",
       "DOM"
     ]
   },
