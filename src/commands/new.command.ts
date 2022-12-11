@@ -1,6 +1,6 @@
+import { Command } from '../decorators/command.decorator';
 import { logInfo } from '../utils/log-info.function';
 import { runCommand } from '../utils/run-command.function';
-import { Command } from '../decorators/command.decorator';
 
 @Command({
   signature: 'new',

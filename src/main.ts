@@ -1,22 +1,19 @@
 import { Reflection as Reflect } from '@abraham/reflection';
 import { parseArgs } from 'node:util';
-import { logError } from './utils/log-error.function';
-import { Constructor } from './interfaces/constructor.interface';
-import { Command } from './interfaces/command.interface';
-import { Parameter } from './interfaces/parameter.interface';
 import { NewCommand } from './commands/new.command';
 import { VersionCommand } from './commands/version.command';
+import { Command } from './interfaces/command.interface';
+import { Constructor } from './interfaces/constructor.interface';
+import { Parameter } from './interfaces/parameter.interface';
+import { logError } from './utils/log-error.function';
 
-process.on('uncaughtException', (err: Error) => {
-  logError(err.message);
+process.on('uncaughtException', (error: Error) => {
+  logError(error.message);
 
   process.exit(1);
 });
 
-const commands: Constructor<Command>[] = [
-  NewCommand,
-  VersionCommand,
-];
+const commands: Constructor<Command>[] = [NewCommand, VersionCommand];
 
 let isCommandValid = false;
 
@@ -27,19 +24,19 @@ await Promise.all(
     const requiredArguments: Record<string, Parameter> =
       Reflect.getMetadata('parameters', command) ?? {};
 
-    const { values } = parseArgs({
+    const argumentValues = parseArgs({
       args: process.argv.slice(3),
       options: {
         ...requiredArguments,
       },
       strict: false,
-    });
+    }).values;
 
     if (name === process.argv[2]) {
       const instance: Command = new command();
 
       try {
-        await instance.handle(...Object.values(values));
+        await instance.handle(...Object.values(argumentValues));
       } catch (err) {
         logError((err as Error).message);
 

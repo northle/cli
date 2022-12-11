@@ -1,7 +1,7 @@
 import { Reflection as Reflect } from '@abraham/reflection';
 import { Constructor } from '../interfaces/constructor.interface';
-import { ClassDecorator } from '../types/class-decorator.type';
 import { Parameter } from '../interfaces/parameter.interface';
+import { ClassDecorator } from '../types/class-decorator.type';
 
 interface Data {
   signature: string;

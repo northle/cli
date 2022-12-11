@@ -1,6 +1,6 @@
+import { Command } from '../decorators/command.decorator';
 import { logInfo } from '../utils/log-info.function';
 import { readJson } from '../utils/read-json.function';
-import { Command } from '../decorators/command.decorator';
 
 @Command({
   signature: 'version',
