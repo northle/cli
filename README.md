@@ -1,9 +1,9 @@
 <div align="center">
   <img src=".github/logo-full.png" width="310">
 
-  <h1>Northle.js Command Line Interface</h1>
+  <h1>Northle.js CLI</h1>
 
-  <p align="center">Modern and declarative backend development framework for Node.js.</p>
+  <p align="center">Command line interface for Northle.js framework.</p>
 
   <p align="center">
     <a href="https://www.npmjs.com/package/@northle/cli" target="_blank"><img src="https://img.shields.io/npm/v/@northle/cli.svg?style=flat-square&labelColor=333842&color=8b5cf6" alt="Latest Version"></a>
