@@ -41,7 +41,7 @@ export class MakeCommand {
     let subfolder = '';
 
     if (name.includes('/')) {
-      subfolder = name.split('/')[0];
+      subfolder = name.slice(0, name.lastIndexOf('/'));
 
       name = name.split('/').pop()!;
     }
