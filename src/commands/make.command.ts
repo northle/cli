@@ -1,10 +1,10 @@
+import chalk from 'chalk';
+import { paramCase, pascalCase } from 'change-case';
+import { pluralize, singularize } from 'inflection';
 import { Command } from '../decorators/command.decorator';
 import { logError } from '../utils/log-error.function';
 import { logInfo } from '../utils/log-info.function';
 import { publishStub } from '../utils/publish-stub.function';
-import { pluralize, singularize } from 'inflection';
-import { paramCase, pascalCase } from 'change-case';
-import chalk from 'chalk';
 
 @Command({
   signature: 'make',
@@ -49,7 +49,9 @@ export class MakeCommand {
     switch (fileType) {
       case 'controller': {
         const className = `${pascalCase(singularize(name))}Controller`;
-        const path = `src/${subfolder ? subfolder : paramCase(pluralize(name))}/${paramCase(singularize(name))}.controller.ts`;
+        const path = `src/${
+          subfolder ? subfolder : paramCase(pluralize(name))
+        }/${paramCase(singularize(name))}.controller.ts`;
         const fullPath = `${cwd}/${path}`;
 
         await publishStub(fullPath, 'controller', {
@@ -58,21 +60,31 @@ export class MakeCommand {
           view: paramCase(pluralize(name)),
         });
 
-        logInfo(`Created ${fileType} '${className}' ${chalk.gray('[')}${chalk.white(path)}${chalk.gray(']')}`);
+        logInfo(
+          `Created ${fileType} '${className}' ${chalk.gray('[')}${chalk.white(
+            path,
+          )}${chalk.gray(']')}`,
+        );
 
         break;
       }
 
       case 'middleware': {
         const className = `${pascalCase(singularize(name))}Middleware`;
-        const path = `src/${subfolder ? subfolder : paramCase(pluralize(name))}/${paramCase(singularize(name))}.middleware.ts`;
+        const path = `src/${
+          subfolder ? subfolder : paramCase(pluralize(name))
+        }/${paramCase(singularize(name))}.middleware.ts`;
         const fullPath = `${cwd}/${path}`;
 
         await publishStub(fullPath, 'middleware', {
           className,
         });
 
-        logInfo(`Created ${fileType} '${className}' ${chalk.gray('[')}${chalk.white(path)}${chalk.gray(']')}`);
+        logInfo(
+          `Created ${fileType} '${className}' ${chalk.gray('[')}${chalk.white(
+            path,
+          )}${chalk.gray(']')}`,
+        );
 
         break;
       }
