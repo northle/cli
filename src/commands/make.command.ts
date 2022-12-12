@@ -38,10 +38,18 @@ export class MakeCommand {
       return;
     }
 
+    let subfolder = '';
+
+    if (name.includes('/')) {
+      subfolder = name.split('/')[0];
+
+      name = name.split('/').pop()!;
+    }
+
     switch (fileType) {
       case 'controller': {
         const className = `${pascalCase(singularize(name))}Controller`;
-        const path = `src/${paramCase(pluralize(name))}/${paramCase(singularize(name))}.controller.ts`;
+        const path = `src/${subfolder ? subfolder : paramCase(pluralize(name))}/${paramCase(singularize(name))}.controller.ts`;
         const fullPath = `${cwd}/${path}`;
 
         await publishStub(fullPath, 'controller', {
@@ -57,7 +65,7 @@ export class MakeCommand {
 
       case 'middleware': {
         const className = `${pascalCase(singularize(name))}Middleware`;
-        const path = `src/${paramCase(pluralize(name))}/${paramCase(singularize(name))}.middleware.ts`;
+        const path = `src/${subfolder ? subfolder : paramCase(pluralize(name))}/${paramCase(singularize(name))}.middleware.ts`;
         const fullPath = `${cwd}/${path}`;
 
         await publishStub(fullPath, 'middleware', {
