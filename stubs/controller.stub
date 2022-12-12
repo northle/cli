@@ -1,0 +1,11 @@
+import { Controller, Request, Route, view } from '@northle/core';
+
+@Controller()
+export class {{ className }} {
+  constructor(private request: Request) {}
+
+  @Route.Get('/{{ path }}')
+  public index() {
+    return view('./views/{{ view }}');
+  }
+}

@@ -1,5 +1,6 @@
 import { Reflection as Reflect } from '@abraham/reflection';
 import { parseArgs } from 'node:util';
+import { MakeCommand } from './commands/make.command';
 import { NewCommand } from './commands/new.command';
 import { VersionCommand } from './commands/version.command';
 import { Command } from './interfaces/command.interface';
@@ -13,7 +14,7 @@ process.on('uncaughtException', (error: Error) => {
   process.exit(1);
 });
 
-const commands: Constructor<Command>[] = [NewCommand, VersionCommand];
+const commands: Constructor<Command>[] = [MakeCommand, NewCommand, VersionCommand];
 
 let isCommandValid = false;
 
@@ -25,18 +26,19 @@ await Promise.all(
       const requiredArguments: Record<string, Parameter> =
         Reflect.getMetadata('parameters', command) ?? {};
 
-      const argumentValues = parseArgs({
+      const { values, positionals } = parseArgs({
         args: process.argv.slice(3),
         options: {
           ...requiredArguments,
         },
+        allowPositionals: true,
         strict: false,
-      }).values;
+      });
 
       const instance: Command = new command();
 
       try {
-        await instance.handle(...Object.values(argumentValues));
+        await instance.handle(...positionals, ...Object.values(values));
       } catch (err) {
         logError((err as Error).message);
 
