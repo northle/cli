@@ -32,6 +32,12 @@ export class MakeCommand {
       return;
     }
 
+    if (!name) {
+      logError('The name argument is required');
+
+      return;
+    }
+
     switch (fileType) {
       case 'controller': {
         const className = `${pascalCase(singularize(name))}Controller`;
@@ -44,7 +50,21 @@ export class MakeCommand {
           view: paramCase(pluralize(name)),
         });
 
-        logInfo(`Created controller '${className}' ${chalk.gray('[')}${chalk.white(path)}${chalk.gray(']')}`);
+        logInfo(`Created ${fileType} '${className}' ${chalk.gray('[')}${chalk.white(path)}${chalk.gray(']')}`);
+
+        break;
+      }
+
+      case 'middleware': {
+        const className = `${pascalCase(singularize(name))}Middleware`;
+        const path = `src/${paramCase(pluralize(name))}/${paramCase(singularize(name))}.middleware.ts`;
+        const fullPath = `${cwd}/${path}`;
+
+        await publishStub(fullPath, 'middleware', {
+          className,
+        });
+
+        logInfo(`Created ${fileType} '${className}' ${chalk.gray('[')}${chalk.white(path)}${chalk.gray(']')}`);
 
         break;
       }

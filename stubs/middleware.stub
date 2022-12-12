@@ -1,0 +1,10 @@
+import { MiddlewareHandler, Request, Response, Service } from '@northle/core';
+
+@Service()
+export class {{ className }} implements MiddlewareHandler {
+  constructor(private request: Request, private response: Response) {}
+
+  public handle(): void {
+    // ...
+  }
+}
