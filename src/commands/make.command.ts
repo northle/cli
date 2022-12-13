@@ -23,10 +23,16 @@ import { publishStub } from '../utils/publish-stub.function';
   },
 })
 export class MakeCommand {
-  public async handle(fileType: string, name: string, flags: Record<string, boolean>): Promise<void> {
+  public async handle(
+    fileType: string,
+    name: string,
+    flags: Record<string, boolean>,
+  ): Promise<void> {
     const cwd = process.cwd();
 
-    const usageInfo = `Usage: ${chalk.gray('$')} ${chalk.white('northle make')} ${chalk.gray('<file-type>')} ${chalk.gray('<name>')}\n`;
+    const usageInfo = `Usage: ${chalk.gray('$')} ${chalk.white(
+      'northle make',
+    )} ${chalk.gray('<file-type>')} ${chalk.gray('<name>')}\n`;
 
     if (flags.help || !fileType) {
       logInfo(usageInfo);
@@ -49,7 +55,7 @@ export class MakeCommand {
         {
           type: 'module',
           description: 'Create new application module',
-        }
+        },
       ]);
 
       return;

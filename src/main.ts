@@ -37,7 +37,9 @@ await Promise.all(
 
       const instance: Command = new command();
 
-      const requiredPositionals = Object.values(requiredArguments).filter((parameter) => parameter.type === 'string');
+      const requiredPositionals = Object.values(requiredArguments).filter(
+        (parameter) => parameter.type === 'string',
+      );
 
       const resolvedPositionals = new Array(requiredPositionals.length);
 
