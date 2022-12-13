@@ -33,12 +33,24 @@ export class MakeCommand {
 
       logInfo('Available options:\n');
 
-      console.table({
-        channel: 'Create new WebSocket channel',
-        controller: 'Create new controller',
-        middleware: 'Create new HTTP middleware',
-        module: 'Create new application module',
-      });
+      console.table([
+        {
+          type: 'channel',
+          description: 'Create new WebSocket channel',
+        },
+        {
+          type: 'controller',
+          description: 'Create new controller',
+        },
+        {
+          type: 'middleware',
+          description: 'Create new HTTP middleware',
+        },
+        {
+          type: 'module',
+          description: 'Create new application module',
+        }
+      ]);
 
       return;
     }
