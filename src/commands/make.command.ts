@@ -20,6 +20,11 @@ import { publishStub } from '../utils/publish-stub.function';
       short: 'h',
       default: false,
     },
+    exact: {
+      type: 'boolean',
+      short: 'e',
+      default: false,
+    },
     force: {
       type: 'boolean',
       short: 'f',
@@ -80,19 +85,23 @@ export class MakeCommand {
 
     switch (fileType) {
       case 'controller': {
-        const className = `${pascalCase(singularize(name))}Controller`;
+        const className = `${flags.exact ? name : pascalCase(singularize(name))}Controller`;
+
+        const resolvedName = flags.exact ? name : paramCase(pluralize(name));
 
         const path = `src/${
-          subfolder ? subfolder : paramCase(pluralize(name))
-        }/${paramCase(singularize(name))}.controller.ts`;
+          subfolder ? subfolder : resolvedName
+        }/${flags.exact ? name : paramCase(singularize(name))}.controller.ts`;
 
         const fullPath = `${cwd}/${path}`;
 
         await publishStub(fullPath, 'controller', {
           className,
-          path: paramCase(pluralize(name)),
-          view: paramCase(pluralize(name)),
-        }, { force: flags.force });
+          path: resolvedName,
+          view: resolvedName,
+        }, {
+          force: flags.force,
+        });
 
         logInfo(
           `Created ${fileType} '${className}' ${chalk.gray('[')}${chalk.white(
@@ -106,15 +115,19 @@ export class MakeCommand {
       case 'middleware': {
         const className = `${pascalCase(singularize(name))}Middleware`;
 
+        const resolvedName = flags.exact ? name : paramCase(pluralize(name));
+
         const path = `src/${
-          subfolder ? subfolder : paramCase(pluralize(name))
-        }/${paramCase(singularize(name))}.middleware.ts`;
+          subfolder ? subfolder : resolvedName
+        }/${flags.exact ? name : paramCase(singularize(name))}.middleware.ts`;
 
         const fullPath = `${cwd}/${path}`;
 
         await publishStub(fullPath, 'middleware', {
           className,
-        }, { force: flags.force });
+        }, {
+          force: flags.force,
+        });
 
         logInfo(
           `Created ${fileType} '${className}' ${chalk.gray('[')}${chalk.white(
