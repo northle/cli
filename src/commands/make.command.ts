@@ -26,8 +26,19 @@ export class MakeCommand {
   public async handle(fileType: string, name: string, flags: Record<string, boolean>): Promise<void> {
     const cwd = process.cwd();
 
-    if (flags.help) {
-      logInfo(`Usage: ${chalk.gray('$')} ${chalk.white('northle make')} ${chalk.gray(fileType ?? '<file-type>')} ${chalk.gray('<name>')}`);
+    const usageInfo = `Usage: ${chalk.gray('$')} ${chalk.white('northle make')} ${chalk.gray('<file-type>')} ${chalk.gray('<name>')}\n`;
+
+    if (flags.help || !fileType) {
+      logInfo(usageInfo);
+
+      logInfo('Available options:\n');
+
+      console.table({
+        channel: 'Create new WebSocket channel',
+        controller: 'Create new controller',
+        middleware: 'Create new HTTP middleware',
+        module: 'Create new application module',
+      });
 
       return;
     }
