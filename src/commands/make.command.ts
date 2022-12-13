@@ -23,10 +23,10 @@ import { publishStub } from '../utils/publish-stub.function';
   },
 })
 export class MakeCommand {
-  public async handle(fileType: string, name: string, help: boolean): Promise<void> {
+  public async handle(fileType: string, name: string, flags: Record<string, boolean>): Promise<void> {
     const cwd = process.cwd();
 
-    if (help) {
+    if (flags.help) {
       logInfo(`Usage: northle make ${fileType ?? '<file-type>'} <name>`);
 
       return;
@@ -49,9 +49,11 @@ export class MakeCommand {
     switch (fileType) {
       case 'controller': {
         const className = `${pascalCase(singularize(name))}Controller`;
+
         const path = `src/${
           subfolder ? subfolder : paramCase(pluralize(name))
         }/${paramCase(singularize(name))}.controller.ts`;
+
         const fullPath = `${cwd}/${path}`;
 
         await publishStub(fullPath, 'controller', {
@@ -71,9 +73,11 @@ export class MakeCommand {
 
       case 'middleware': {
         const className = `${pascalCase(singularize(name))}Middleware`;
+
         const path = `src/${
           subfolder ? subfolder : paramCase(pluralize(name))
         }/${paramCase(singularize(name))}.middleware.ts`;
+
         const fullPath = `${cwd}/${path}`;
 
         await publishStub(fullPath, 'middleware', {

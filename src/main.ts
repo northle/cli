@@ -37,8 +37,18 @@ await Promise.all(
 
       const instance: Command = new command();
 
+      const requiredPositionals = Object.values(requiredArguments).filter((parameter) => parameter.type === 'string');
+
+      const resolvedPositionals = new Array(requiredPositionals.length);
+
+      positionals.map((positional, index) => {
+        resolvedPositionals[index] = positional;
+      });
+
+      resolvedPositionals.fill(undefined, positionals.length);
+
       try {
-        await instance.handle(...positionals, ...Object.values(values));
+        await instance.handle(...resolvedPositionals, values);
       } catch (err) {
         logError((err as Error).message);
 
