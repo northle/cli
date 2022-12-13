@@ -27,7 +27,7 @@ export class MakeCommand {
     const cwd = process.cwd();
 
     if (flags.help) {
-      logInfo(`Usage: ${chalk.white('$ northle')} ${chalk.hex('#f8c377')('make')} ${chalk.gray(fileType ?? '<file-type>')} ${chalk.gray('<name>')}`);
+      logInfo(`Usage: ${chalk.gray('$')} ${chalk.white('northle make')} ${chalk.gray(fileType ?? '<file-type>')} ${chalk.gray('<name>')}`);
 
       return;
     }
