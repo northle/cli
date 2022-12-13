@@ -20,6 +20,11 @@ import { publishStub } from '../utils/publish-stub.function';
       short: 'h',
       default: false,
     },
+    force: {
+      type: 'boolean',
+      short: 'f',
+      default: false,
+    },
   },
 })
 export class MakeCommand {
@@ -30,12 +35,10 @@ export class MakeCommand {
   ): Promise<void> {
     const cwd = process.cwd();
 
-    const usageInfo = `Usage: ${chalk.gray('$')} ${chalk.white(
-      'northle make',
-    )} ${chalk.gray('<file-type>')} ${chalk.gray('<name>')}\n`;
-
     if (flags.help || !fileType) {
-      logInfo(usageInfo);
+      logInfo(`Usage: ${chalk.gray('$')} ${chalk.white(
+        'northle make',
+      )} ${chalk.gray('<file-type>')} ${chalk.gray('<name>')}\n`);
 
       logInfo('Available options:\n');
 
@@ -89,7 +92,7 @@ export class MakeCommand {
           className,
           path: paramCase(pluralize(name)),
           view: paramCase(pluralize(name)),
-        });
+        }, { force: flags.force });
 
         logInfo(
           `Created ${fileType} '${className}' ${chalk.gray('[')}${chalk.white(
@@ -111,7 +114,7 @@ export class MakeCommand {
 
         await publishStub(fullPath, 'middleware', {
           className,
-        });
+        }, { force: flags.force });
 
         logInfo(
           `Created ${fileType} '${className}' ${chalk.gray('[')}${chalk.white(
