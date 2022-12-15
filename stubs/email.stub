@@ -1,0 +1,3 @@
+<main>
+  <h1>{{ title }} Email</h1>
+</main>

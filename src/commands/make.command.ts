@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import { paramCase, pascalCase } from 'change-case';
+import { capitalCase, paramCase, pascalCase } from 'change-case';
 import { pluralize, singularize } from 'inflection';
 import { Command } from '../decorators/command.decorator';
 import { logError } from '../utils/log-error.function';
@@ -132,6 +132,26 @@ export class MakeCommand {
 
         logInfo(
           `Created ${fileType} '${className}' ${chalk.gray('[')}${chalk.white(
+            path,
+          )}${chalk.gray(']')}`,
+        );
+
+        break;
+      }
+
+      case 'email': {
+        const resolvedName = flags.exact ? name : paramCase(singularize(name));
+        const path = `src/emails/views/${resolvedName}.html`;
+        const fullPath = `${cwd}/${path}`;
+
+        await publishStub(fullPath, 'email', {
+          title: capitalCase(name),
+        }, {
+          force: flags.force,
+        });
+
+        logInfo(
+          `Created ${fileType} '${resolvedName}' ${chalk.gray('[')}${chalk.white(
             path,
           )}${chalk.gray(']')}`,
         );
