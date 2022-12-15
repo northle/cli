@@ -1,0 +1,10 @@
+import { Logger, Module } from '@northle/core';
+
+@Module({
+  imports: [],
+  controllers: [],
+  socketChannels: [],
+})
+export class {{ className }} {
+  constructor(private logger: Logger) {}
+}

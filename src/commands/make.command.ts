@@ -165,6 +165,32 @@ export class MakeCommand {
         break;
       }
 
+      case 'module': {
+        const className = `${flags.exact ? name : pascalCase(singularize(name))}Module`;
+
+        const resolvedName = flags.exact ? name : paramCase(pluralize(name));
+
+        const path = `src/${
+          subfolder ? subfolder : resolvedName
+        }/${flags.exact ? name : paramCase(singularize(name))}.module.ts`;
+
+        const fullPath = `${cwd}/${path}`;
+
+        await publishStub(fullPath, 'module', {
+          className,
+        }, {
+          force: flags.force,
+        });
+
+        logInfo(
+          `Created ${fileType} '${className}' ${chalk.gray('[')}${chalk.white(
+            path,
+          )}${chalk.gray(']')}`,
+        );
+
+        break;
+      }
+
       default: {
         logError(`Unknown file type '${fileType}'`);
 
