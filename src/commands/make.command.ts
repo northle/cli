@@ -84,6 +84,33 @@ export class MakeCommand {
     }
 
     switch (fileType) {
+      case 'channel': {
+        const className = `${flags.exact ? name : pascalCase(singularize(name))}Channel`;
+
+        const resolvedName = flags.exact ? name : paramCase(pluralize(name));
+
+        const path = `src/${
+          subfolder ? subfolder : resolvedName
+        }/${flags.exact ? name : paramCase(singularize(name))}.channel.ts`;
+
+        const fullPath = `${cwd}/${path}`;
+
+        await publishStub(fullPath, 'channel', {
+          className,
+          path: resolvedName,
+        }, {
+          force: flags.force,
+        });
+
+        logInfo(
+          `Created ${fileType} '${className}' ${chalk.gray('[')}${chalk.white(
+            path,
+          )}${chalk.gray(']')}`,
+        );
+
+        break;
+      }
+
       case 'controller': {
         const className = `${flags.exact ? name : pascalCase(singularize(name))}Controller`;
 

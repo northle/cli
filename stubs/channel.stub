@@ -1,0 +1,8 @@
+import { Authorizer, Channel } from '@northle/core';
+
+@Channel('{{ path }}/:id')
+export class {{ className }} implements Authorizer {
+  public pass(): boolean {
+    return true;
+  }
+}
