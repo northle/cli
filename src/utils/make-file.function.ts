@@ -3,16 +3,14 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { dirname } from 'node:path';
 
 export const makeFile = async (path: string, content: string, options?: { force?: boolean }) => {
-  if (!existsSync(path)) {
+  if (!existsSync(dirname(path))) {
     await mkdir(dirname(path), {
       recursive: true,
     });
-  } else {
-    return false;
   }
 
   try {
-    if (!(options?.force ?? false) && existsSync(path)) {
+    if (!options?.force && existsSync(path)) {
       return false;
     }
 
