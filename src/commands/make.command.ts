@@ -20,14 +20,51 @@ import { publishStub } from '../utils/publish-stub.function';
       short: 'h',
       default: false,
     },
+    exact: {
+      type: 'boolean',
+      short: 'e',
+      default: false,
+    },
+    force: {
+      type: 'boolean',
+      short: 'f',
+      default: false,
+    },
   },
 })
 export class MakeCommand {
-  public async handle(fileType: string, name: string, help: boolean): Promise<void> {
+  public async handle(
+    fileType: string,
+    name: string,
+    flags: Record<string, boolean>,
+  ): Promise<void> {
     const cwd = process.cwd();
 
-    if (help) {
-      logInfo(`Usage: northle make ${fileType ?? '<file-type>'} <name>`);
+    if (flags.help || !fileType) {
+      logInfo(`Usage: ${chalk.gray('$')} ${chalk.white(
+        'northle make',
+      )} ${chalk.gray('<file-type>')} ${chalk.gray('<name>')}\n`);
+
+      logInfo('Available options:\n');
+
+      console.table([
+        {
+          type: 'channel',
+          description: 'Create new WebSocket channel',
+        },
+        {
+          type: 'controller',
+          description: 'Create new controller',
+        },
+        {
+          type: 'middleware',
+          description: 'Create new HTTP middleware',
+        },
+        {
+          type: 'module',
+          description: 'Create new application module',
+        },
+      ]);
 
       return;
     }
@@ -48,16 +85,22 @@ export class MakeCommand {
 
     switch (fileType) {
       case 'controller': {
-        const className = `${pascalCase(singularize(name))}Controller`;
+        const className = `${flags.exact ? name : pascalCase(singularize(name))}Controller`;
+
+        const resolvedName = flags.exact ? name : paramCase(pluralize(name));
+
         const path = `src/${
-          subfolder ? subfolder : paramCase(pluralize(name))
-        }/${paramCase(singularize(name))}.controller.ts`;
+          subfolder ? subfolder : resolvedName
+        }/${flags.exact ? name : paramCase(singularize(name))}.controller.ts`;
+
         const fullPath = `${cwd}/${path}`;
 
         await publishStub(fullPath, 'controller', {
           className,
-          path: paramCase(pluralize(name)),
-          view: paramCase(pluralize(name)),
+          path: resolvedName,
+          view: resolvedName,
+        }, {
+          force: flags.force,
         });
 
         logInfo(
@@ -71,13 +114,19 @@ export class MakeCommand {
 
       case 'middleware': {
         const className = `${pascalCase(singularize(name))}Middleware`;
+
+        const resolvedName = flags.exact ? name : paramCase(pluralize(name));
+
         const path = `src/${
-          subfolder ? subfolder : paramCase(pluralize(name))
-        }/${paramCase(singularize(name))}.middleware.ts`;
+          subfolder ? subfolder : resolvedName
+        }/${flags.exact ? name : paramCase(singularize(name))}.middleware.ts`;
+
         const fullPath = `${cwd}/${path}`;
 
         await publishStub(fullPath, 'middleware', {
           className,
+        }, {
+          force: flags.force,
         });
 
         logInfo(

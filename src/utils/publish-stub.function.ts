@@ -6,6 +6,7 @@ export const publishStub = async (
   file: string,
   stub: string,
   data: Record<string, string>,
+  options?: { force?: boolean },
 ) => {
   try {
     const path = `${fileURLToPath(import.meta.url)}/../../../stubs/${stub}.stub`;
@@ -18,7 +19,9 @@ export const publishStub = async (
       content = content.replace(expression[0], value);
     }
 
-    makeFile(file, content);
+    makeFile(file, content, {
+      force: options?.force ?? false,
+    });
 
     return true;
   } catch (error) {
