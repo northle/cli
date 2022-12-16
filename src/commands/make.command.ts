@@ -228,6 +228,28 @@ export class MakeCommand {
         break;
       }
 
+      case 'test': {
+        const resolvedName = flags.exact ? name : paramCase(pluralize(name));
+
+        const path = `src/${
+          directory ? directory : paramCase(resolvedName)
+        }/${paramCase(flags.exact ? name : singularize(name))}.test.ts`;
+
+        const fullPath = `${cwd}/${path}`;
+
+        created = await publishStub(fullPath, 'test', {
+          describe: name,
+          it: `has working ${name} features`,
+        }, {
+          force: flags.force,
+        });
+
+        createdName = resolvedName;
+        createdPath = path;
+
+        break;
+      }
+
       default: {
         logError(`Unknown file type '${fileType}'`);
 
