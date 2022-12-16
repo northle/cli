@@ -57,6 +57,10 @@ export class MakeCommand {
           description: 'Create new controller',
         },
         {
+          type: 'email',
+          description: 'Create new email template',
+        },
+        {
           type: 'middleware',
           description: 'Create new HTTP middleware',
         },
