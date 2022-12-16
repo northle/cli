@@ -87,6 +87,8 @@ export class MakeCommand {
       name = name.split('/').pop()!;
     }
 
+    let created = false;
+
     switch (fileType) {
       case 'channel': {
         const className = `${flags.exact ? name : pascalCase(singularize(name))}Channel`;
@@ -99,7 +101,7 @@ export class MakeCommand {
 
         const fullPath = `${cwd}/${path}`;
 
-        await publishStub(fullPath, 'channel', {
+        created = await publishStub(fullPath, 'channel', {
           className,
           path: resolvedName,
         }, {
@@ -126,7 +128,7 @@ export class MakeCommand {
 
         const fullPath = `${cwd}/${path}`;
 
-        await publishStub(fullPath, 'controller', {
+        created = await publishStub(fullPath, 'controller', {
           className,
           path: resolvedName,
           view: resolvedName,
@@ -148,7 +150,7 @@ export class MakeCommand {
         const path = `src/${directory ? directory : 'emails'}/views/${paramCase(resolvedName)}.html`;
         const fullPath = `${cwd}/${path}`;
 
-        await publishStub(fullPath, 'email', {
+        created = await publishStub(fullPath, 'email', {
           title: capitalCase(name),
         }, {
           force: flags.force,
@@ -174,7 +176,7 @@ export class MakeCommand {
 
         const fullPath = `${cwd}/${path}`;
 
-        await publishStub(fullPath, 'middleware', {
+        created = await publishStub(fullPath, 'middleware', {
           className,
         }, {
           force: flags.force,
@@ -200,7 +202,7 @@ export class MakeCommand {
 
         const fullPath = `${cwd}/${path}`;
 
-        await publishStub(fullPath, 'module', {
+        created = await publishStub(fullPath, 'module', {
           className,
         }, {
           force: flags.force,
@@ -220,6 +222,12 @@ export class MakeCommand {
 
         process.exit(1);
       }
+    }
+
+    if (!created) {
+      logError(`${fileType[0].toUpperCase()}${fileType.slice(1)} '${name}' already exists. Use the --force flag to overwrite it.`);
+
+      return;
     }
   }
 }

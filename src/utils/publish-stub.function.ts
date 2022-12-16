@@ -19,11 +19,9 @@ export const publishStub = async (
       content = content.replace(expression[0], value);
     }
 
-    makeFile(file, content, {
+    return await makeFile(file, content, {
       force: options?.force ?? false,
     });
-
-    return true;
   } catch (error) {
     return false;
   }
