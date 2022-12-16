@@ -88,6 +88,8 @@ export class MakeCommand {
     }
 
     let created = false;
+    let createdName = '';
+    let createdPath = '';
 
     switch (fileType) {
       case 'channel': {
@@ -108,11 +110,8 @@ export class MakeCommand {
           force: flags.force,
         });
 
-        logInfo(
-          `Created ${fileType} '${className}' ${chalk.gray('[')}${chalk.white(
-            path,
-          )}${chalk.gray(']')}`,
-        );
+        createdName = className;
+        createdPath = path;
 
         break;
       }
@@ -136,11 +135,8 @@ export class MakeCommand {
           force: flags.force,
         });
 
-        logInfo(
-          `Created ${fileType} '${className}' ${chalk.gray('[')}${chalk.white(
-            path,
-          )}${chalk.gray(']')}`,
-        );
+        createdName = className;
+        createdPath = path;
 
         break;
       }
@@ -156,11 +152,8 @@ export class MakeCommand {
           force: flags.force,
         });
 
-        logInfo(
-          `Created ${fileType} '${resolvedName}' ${chalk.gray('[')}${chalk.white(
-            path,
-          )}${chalk.gray(']')}`,
-        );
+        createdName = resolvedName;
+        createdPath = path;
 
         break;
       }
@@ -182,11 +175,8 @@ export class MakeCommand {
           force: flags.force,
         });
 
-        logInfo(
-          `Created ${fileType} '${className}' ${chalk.gray('[')}${chalk.white(
-            path,
-          )}${chalk.gray(']')}`,
-        );
+        createdName = className;
+        createdPath = path;
 
         break;
       }
@@ -208,11 +198,8 @@ export class MakeCommand {
           force: flags.force,
         });
 
-        logInfo(
-          `Created ${fileType} '${className}' ${chalk.gray('[')}${chalk.white(
-            path,
-          )}${chalk.gray(']')}`,
-        );
+        createdName = className;
+        createdPath = path;
 
         break;
       }
@@ -235,11 +222,8 @@ export class MakeCommand {
           force: flags.force,
         });
 
-        logInfo(
-          `Created ${fileType} '${className}' ${chalk.gray('[')}${chalk.white(
-            path,
-          )}${chalk.gray(']')}`,
-        );
+        createdName = className;
+        createdPath = path;
 
         break;
       }
@@ -256,5 +240,11 @@ export class MakeCommand {
 
       return;
     }
+
+    logInfo(
+      `Created ${fileType} '${createdName}' ${chalk.gray('[')}${chalk.white(
+        createdPath,
+      )}${chalk.gray(']')}`,
+    );
   }
 }
