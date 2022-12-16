@@ -1,0 +1,6 @@
+import { Service } from '@northle/core';
+
+@Service()
+export class {{ className }} {
+  constructor() {}
+}

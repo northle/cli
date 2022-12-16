@@ -217,6 +217,33 @@ export class MakeCommand {
         break;
       }
 
+      case 'service': {
+        const className = `${flags.exact ? name : pascalCase(singularize(name))}Service`;
+
+        const resolvedName = flags.exact ? name : paramCase(pluralize(name));
+
+        const path = `src/${
+          directory ? directory : paramCase(resolvedName)
+        }/${paramCase(flags.exact ? name : singularize(name))}.service.ts`;
+
+        const fullPath = `${cwd}/${path}`;
+
+        created = await publishStub(fullPath, 'service', {
+          className,
+          path: resolvedName,
+        }, {
+          force: flags.force,
+        });
+
+        logInfo(
+          `Created ${fileType} '${className}' ${chalk.gray('[')}${chalk.white(
+            path,
+          )}${chalk.gray(']')}`,
+        );
+
+        break;
+      }
+
       default: {
         logError(`Unknown file type '${fileType}'`);
 
