@@ -75,10 +75,10 @@ export class MakeCommand {
       return;
     }
 
-    let subfolder = '';
+    let directory = '';
 
     if (name.includes('/')) {
-      subfolder = name.slice(0, name.lastIndexOf('/'));
+      directory = name.slice(0, name.lastIndexOf('/'));
 
       name = name.split('/').pop()!;
     }
@@ -90,8 +90,8 @@ export class MakeCommand {
         const resolvedName = flags.exact ? name : paramCase(pluralize(name));
 
         const path = `src/${
-          subfolder ? subfolder : resolvedName
-        }/${flags.exact ? name : paramCase(singularize(name))}.channel.ts`;
+          directory ? directory : paramCase(resolvedName)
+        }/${paramCase(flags.exact ? name : singularize(name))}.channel.ts`;
 
         const fullPath = `${cwd}/${path}`;
 
@@ -117,8 +117,8 @@ export class MakeCommand {
         const resolvedName = flags.exact ? name : paramCase(pluralize(name));
 
         const path = `src/${
-          subfolder ? subfolder : resolvedName
-        }/${flags.exact ? name : paramCase(singularize(name))}.controller.ts`;
+          directory ? directory : paramCase(resolvedName)
+        }/${paramCase(flags.exact ? name : singularize(name))}.controller.ts`;
 
         const fullPath = `${cwd}/${path}`;
 
@@ -140,8 +140,8 @@ export class MakeCommand {
       }
 
       case 'email': {
-        const resolvedName = flags.exact ? name : paramCase(singularize(name));
-        const path = `src/emails/views/${resolvedName}.html`;
+        const resolvedName = paramCase(name);
+        const path = `src/${directory ? directory : 'emails'}/views/${paramCase(resolvedName)}.html`;
         const fullPath = `${cwd}/${path}`;
 
         await publishStub(fullPath, 'email', {
@@ -165,8 +165,8 @@ export class MakeCommand {
         const resolvedName = flags.exact ? name : paramCase(pluralize(name));
 
         const path = `src/${
-          subfolder ? subfolder : resolvedName
-        }/${flags.exact ? name : paramCase(singularize(name))}.middleware.ts`;
+          directory ? directory : paramCase(resolvedName)
+        }/${paramCase(flags.exact ? name : singularize(name))}.middleware.ts`;
 
         const fullPath = `${cwd}/${path}`;
 
@@ -191,8 +191,8 @@ export class MakeCommand {
         const resolvedName = flags.exact ? name : paramCase(pluralize(name));
 
         const path = `src/${
-          subfolder ? subfolder : resolvedName
-        }/${flags.exact ? name : paramCase(singularize(name))}.module.ts`;
+          directory ? directory : paramCase(resolvedName)
+        }/${paramCase(flags.exact ? name : singularize(name))}.module.ts`;
 
         const fullPath = `${cwd}/${path}`;
 
