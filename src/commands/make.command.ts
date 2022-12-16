@@ -39,11 +39,14 @@ export class MakeCommand {
     flags: Record<string, boolean>,
   ): Promise<void> {
     const cwd = process.cwd();
+    const { force, help } = flags;
 
-    if (flags.help || !fileType) {
-      logInfo(`Usage: ${chalk.gray('$')} ${chalk.white(
-        'northle make',
-      )} ${chalk.gray('<file-type>')} ${chalk.gray('<name>')}\n`);
+    if (help || !fileType) {
+      logInfo(
+        `Usage: ${chalk.gray('$')} ${chalk.white('northle make')} ${chalk.gray(
+          '<file-type>',
+        )} ${chalk.gray('<name>')}\n`,
+      );
 
       logInfo('Available options:\n');
 
@@ -79,6 +82,9 @@ export class MakeCommand {
       return;
     }
 
+    let created = false;
+    let createdName = '';
+    let createdPath = '';
     let directory = '';
 
     if (name.includes('/')) {
@@ -87,14 +93,11 @@ export class MakeCommand {
       name = name.split('/').pop()!;
     }
 
-    let created = false;
-    let createdName = '';
-    let createdPath = '';
-
     switch (fileType) {
       case 'channel': {
-        const className = `${flags.exact ? name : pascalCase(singularize(name))}Channel`;
-
+        const className = `${
+          flags.exact ? name : pascalCase(singularize(name))
+        }Channel`;
         const resolvedName = flags.exact ? name : paramCase(pluralize(name));
 
         const path = `src/${
@@ -103,12 +106,17 @@ export class MakeCommand {
 
         const fullPath = `${cwd}/${path}`;
 
-        created = await publishStub(fullPath, 'channel', {
-          className,
-          path: resolvedName,
-        }, {
-          force: flags.force,
-        });
+        created = await publishStub(
+          fullPath,
+          'channel',
+          {
+            className,
+            path: resolvedName,
+          },
+          {
+            force,
+          },
+        );
 
         createdName = className;
         createdPath = path;
@@ -117,8 +125,9 @@ export class MakeCommand {
       }
 
       case 'controller': {
-        const className = `${flags.exact ? name : pascalCase(singularize(name))}Controller`;
-
+        const className = `${
+          flags.exact ? name : pascalCase(singularize(name))
+        }Controller`;
         const resolvedName = flags.exact ? name : paramCase(pluralize(name));
 
         const path = `src/${
@@ -127,13 +136,18 @@ export class MakeCommand {
 
         const fullPath = `${cwd}/${path}`;
 
-        created = await publishStub(fullPath, 'controller', {
-          className,
-          path: resolvedName,
-          view: resolvedName,
-        }, {
-          force: flags.force,
-        });
+        created = await publishStub(
+          fullPath,
+          'controller',
+          {
+            className,
+            path: resolvedName,
+            view: resolvedName,
+          },
+          {
+            force,
+          },
+        );
 
         createdName = className;
         createdPath = path;
@@ -143,14 +157,21 @@ export class MakeCommand {
 
       case 'email': {
         const resolvedName = paramCase(name);
-        const path = `src/${directory ? directory : 'emails'}/views/${paramCase(resolvedName)}.html`;
+        const path = `src/${directory ? directory : 'emails'}/views/${paramCase(
+          resolvedName,
+        )}.html`;
         const fullPath = `${cwd}/${path}`;
 
-        created = await publishStub(fullPath, 'email', {
-          title: capitalCase(name),
-        }, {
-          force: flags.force,
-        });
+        created = await publishStub(
+          fullPath,
+          'email',
+          {
+            title: capitalCase(name),
+          },
+          {
+            force,
+          },
+        );
 
         createdName = resolvedName;
         createdPath = path;
@@ -160,7 +181,6 @@ export class MakeCommand {
 
       case 'middleware': {
         const className = `${pascalCase(singularize(name))}Middleware`;
-
         const resolvedName = flags.exact ? name : paramCase(pluralize(name));
 
         const path = `src/${
@@ -169,11 +189,16 @@ export class MakeCommand {
 
         const fullPath = `${cwd}/${path}`;
 
-        created = await publishStub(fullPath, 'middleware', {
-          className,
-        }, {
-          force: flags.force,
-        });
+        created = await publishStub(
+          fullPath,
+          'middleware',
+          {
+            className,
+          },
+          {
+            force,
+          },
+        );
 
         createdName = className;
         createdPath = path;
@@ -182,8 +207,9 @@ export class MakeCommand {
       }
 
       case 'module': {
-        const className = `${flags.exact ? name : pascalCase(singularize(name))}Module`;
-
+        const className = `${
+          flags.exact ? name : pascalCase(singularize(name))
+        }Module`;
         const resolvedName = flags.exact ? name : paramCase(pluralize(name));
 
         const path = `src/${
@@ -192,11 +218,16 @@ export class MakeCommand {
 
         const fullPath = `${cwd}/${path}`;
 
-        created = await publishStub(fullPath, 'module', {
-          className,
-        }, {
-          force: flags.force,
-        });
+        created = await publishStub(
+          fullPath,
+          'module',
+          {
+            className,
+          },
+          {
+            force,
+          },
+        );
 
         createdName = className;
         createdPath = path;
@@ -205,8 +236,9 @@ export class MakeCommand {
       }
 
       case 'service': {
-        const className = `${flags.exact ? name : pascalCase(singularize(name))}Service`;
-
+        const className = `${
+          flags.exact ? name : pascalCase(singularize(name))
+        }Service`;
         const resolvedName = flags.exact ? name : paramCase(pluralize(name));
 
         const path = `src/${
@@ -215,12 +247,17 @@ export class MakeCommand {
 
         const fullPath = `${cwd}/${path}`;
 
-        created = await publishStub(fullPath, 'service', {
-          className,
-          path: resolvedName,
-        }, {
-          force: flags.force,
-        });
+        created = await publishStub(
+          fullPath,
+          'service',
+          {
+            className,
+            path: resolvedName,
+          },
+          {
+            force,
+          },
+        );
 
         createdName = className;
         createdPath = path;
@@ -237,12 +274,17 @@ export class MakeCommand {
 
         const fullPath = `${cwd}/${path}`;
 
-        created = await publishStub(fullPath, 'test', {
-          describe: name,
-          it: `has working ${name} features`,
-        }, {
-          force: flags.force,
-        });
+        created = await publishStub(
+          fullPath,
+          'test',
+          {
+            describe: name,
+            it: `has working ${name} features`,
+          },
+          {
+            force,
+          },
+        );
 
         createdName = resolvedName;
         createdPath = path;
@@ -258,7 +300,11 @@ export class MakeCommand {
     }
 
     if (!created) {
-      logError(`${fileType[0].toUpperCase()}${fileType.slice(1)} '${name}' already exists. Use the --force flag to overwrite it.`);
+      logError(
+        `${fileType[0].toUpperCase()}${fileType.slice(
+          1,
+        )} '${name}' already exists. Use the --force flag to overwrite it.`,
+      );
 
       return;
     }
