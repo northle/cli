@@ -4,6 +4,7 @@ import { existsSync } from 'node:fs';
 import { MakeCommand } from './commands/make.command';
 import { NewCommand } from './commands/new.command';
 import { VersionCommand } from './commands/version.command';
+import { UpdateCommand } from './commands/update.command';
 import { Command } from './interfaces/command.interface';
 import { Constructor } from './interfaces/constructor.interface';
 import { Parameter } from './interfaces/parameter.interface';
@@ -15,7 +16,7 @@ process.on('uncaughtException', (error: Error) => {
   process.exit(1);
 });
 
-const commands: Constructor<Command>[] = [MakeCommand, NewCommand, VersionCommand];
+const commands: Constructor<Command>[] = [MakeCommand, NewCommand, UpdateCommand, VersionCommand];
 
 let isCommandValid = false;
 
