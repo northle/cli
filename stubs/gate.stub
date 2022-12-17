@@ -1,0 +1,7 @@
+import { Gate } from '@northle/core';
+
+export class {{ className }} extends Gate {
+  public edit(id: string): boolean {
+    return this.user.id === id;
+  }
+}

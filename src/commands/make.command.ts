@@ -179,6 +179,33 @@ export class MakeCommand {
         break;
       }
 
+      case 'gate': {
+        const className = `${pascalCase(singularize(name))}Gate`;
+        const resolvedName = flags.exact ? name : paramCase(pluralize(name));
+
+        const path = `src/${
+          directory ? directory : paramCase(resolvedName)
+        }/${paramCase(flags.exact ? name : singularize(name))}.gate.ts`;
+
+        const fullPath = `${cwd}/${path}`;
+
+        created = await publishStub(
+          fullPath,
+          'gate',
+          {
+            className,
+          },
+          {
+            force,
+          },
+        );
+
+        createdName = className;
+        createdPath = path;
+
+        break;
+      }
+
       case 'middleware': {
         const className = `${pascalCase(singularize(name))}Middleware`;
         const resolvedName = flags.exact ? name : paramCase(pluralize(name));
