@@ -1,10 +1,10 @@
 import { Reflection as Reflect } from '@abraham/reflection';
-import { parseArgs } from 'node:util';
 import { existsSync } from 'node:fs';
+import { parseArgs } from 'node:util';
 import { MakeCommand } from './commands/make.command';
 import { NewCommand } from './commands/new.command';
-import { VersionCommand } from './commands/version.command';
 import { UpdateCommand } from './commands/update.command';
+import { VersionCommand } from './commands/version.command';
 import { Command } from './interfaces/command.interface';
 import { Constructor } from './interfaces/constructor.interface';
 import { Parameter } from './interfaces/parameter.interface';
@@ -16,7 +16,12 @@ process.on('uncaughtException', (error: Error) => {
   process.exit(1);
 });
 
-const commands: Constructor<Command>[] = [MakeCommand, NewCommand, UpdateCommand, VersionCommand];
+const commands: Constructor<Command>[] = [
+  MakeCommand,
+  NewCommand,
+  UpdateCommand,
+  VersionCommand,
+];
 
 let isCommandValid = false;
 
@@ -28,7 +33,10 @@ await Promise.all(
       const requiredArguments: Record<string, Parameter> =
         Reflect.getMetadata('parameters', command) ?? {};
 
-      if (!Reflect.getMetadata('global', command) && !existsSync(`${process.cwd()}/package.json`)) {
+      if (
+        !Reflect.getMetadata('global', command) &&
+        !existsSync(`${process.cwd()}/package.json`)
+      ) {
         logError(`Command '${name}' can only be used in a Northle app directories`);
 
         process.exit(1);
