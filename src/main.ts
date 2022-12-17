@@ -1,5 +1,6 @@
 import { Reflection as Reflect } from '@abraham/reflection';
 import { parseArgs } from 'node:util';
+import { existsSync } from 'node:fs';
 import { MakeCommand } from './commands/make.command';
 import { NewCommand } from './commands/new.command';
 import { VersionCommand } from './commands/version.command';
@@ -26,6 +27,12 @@ await Promise.all(
       const requiredArguments: Record<string, Parameter> =
         Reflect.getMetadata('parameters', command) ?? {};
 
+      if (!Reflect.getMetadata('global', command) && !existsSync(`${process.cwd()}/package.json`)) {
+        logError(`Command '${name}' can only be used in a Northle app directories`);
+
+        process.exit(1);
+      }
+
       const { values, positionals } = parseArgs({
         args: process.argv.slice(3),
         options: {
@@ -51,8 +58,8 @@ await Promise.all(
 
       try {
         await instance.handle(...resolvedPositionals, values);
-      } catch (err) {
-        logError((err as Error).message);
+      } catch (error) {
+        logError((error as Error).message);
 
         process.exit(1);
       }

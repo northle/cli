@@ -4,6 +4,7 @@ import { readJson } from '../utils/read-json.function';
 
 @Command({
   signature: 'version',
+  global: true,
 })
 export class VersionCommand {
   public async handle(): Promise<void> {

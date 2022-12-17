@@ -9,6 +9,7 @@ import { runCommand } from '../utils/run-command.function';
       type: 'string',
     },
   },
+  global: true,
 })
 export class NewCommand {
   public async handle(projectName: string): Promise<void> {
