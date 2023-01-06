@@ -7,7 +7,7 @@ import { logInfo } from '../utils/log-info.function';
 import { publishStub } from '../utils/publish-stub.function';
 
 @Command({
-  signature: 'make',
+  signatures: ['make', 'm'],
   parameters: {
     fileType: {
       type: 'string',

@@ -4,7 +4,7 @@ import { Parameter } from '../interfaces/parameter.interface';
 import { ClassDecorator } from '../types/class-decorator.type';
 
 interface Data {
-  signature: string;
+  signature?: string;
   signatures?: string[];
   parameters?: Record<string, Parameter>;
   global?: boolean;

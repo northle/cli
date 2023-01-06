@@ -3,7 +3,7 @@ import { logInfo } from '../utils/log-info.function';
 import { runCommand } from '../utils/run-command.function';
 
 @Command({
-  signature: 'new',
+  signatures: ['new', 'n'],
   parameters: {
     projectName: {
       type: 'string',

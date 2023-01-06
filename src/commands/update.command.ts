@@ -5,7 +5,7 @@ import { readJson } from '../utils/read-json.function';
 import { runCommand } from '../utils/run-command.function';
 
 @Command({
-  signature: 'update',
+  signatures: ['update', 'u'],
 })
 export class UpdateCommand {
   public async handle(): Promise<void> {

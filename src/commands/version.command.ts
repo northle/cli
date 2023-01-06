@@ -3,7 +3,7 @@ import { logInfo } from '../utils/log-info.function';
 import { readJson } from '../utils/read-json.function';
 
 @Command({
-  signature: 'version',
+  signatures: ['version', 'v'],
   global: true,
 })
 export class VersionCommand {
