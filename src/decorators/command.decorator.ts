@@ -10,7 +10,7 @@ interface Data {
   global?: boolean;
 }
 
-export const Command = (data: Data): ClassDecorator => {
+export function Command(data: Data): ClassDecorator {
   return (target: Constructor) => {
     const { signature, signatures, parameters } = data;
 
@@ -20,4 +20,4 @@ export const Command = (data: Data): ClassDecorator => {
 
     return target;
   };
-};
+}

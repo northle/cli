@@ -27,7 +27,10 @@ let isCommandValid = false;
 
 await Promise.all(
   commands.map(async (command: Constructor<Command>) => {
-    const signatures = [Reflect.getMetadata('signature', command), ...(Reflect.getMetadata<string[]>('signatures', command) ?? [])];
+    const signatures = [
+      Reflect.getMetadata('signature', command),
+      ...(Reflect.getMetadata<string[]>('signatures', command) ?? []),
+    ];
 
     if (signatures.includes(process.argv[2])) {
       const requiredArguments: Record<string, Parameter> =
