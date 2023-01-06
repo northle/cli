@@ -2,12 +2,12 @@ import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { makeFile } from './make-file.function';
 
-export const publishStub = async (
+export async function publishStub(
   file: string,
   stub: string,
   data: Record<string, string>,
   options?: { force?: boolean },
-) => {
+) {
   try {
     const path = `${fileURLToPath(import.meta.url)}/../../../stubs/${stub}.stub`;
 
@@ -22,7 +22,7 @@ export const publishStub = async (
     return await makeFile(file, content, {
       force: options?.force ?? false,
     });
-  } catch (error) {
+  } catch {
     return false;
   }
-};
+}

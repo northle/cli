@@ -3,11 +3,11 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { dirname } from 'node:path';
 import { logError } from './log-error.function';
 
-export const makeFile = async (
+export async function makeFile(
   path: string,
   content: string,
   options?: { force?: boolean },
-) => {
+) {
   if (!existsSync(dirname(path))) {
     await mkdir(dirname(path), {
       recursive: true,
@@ -27,4 +27,4 @@ export const makeFile = async (
 
     return false;
   }
-};
+}

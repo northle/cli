@@ -1,4 +1,4 @@
-export const setupStdin = (callback?: () => void) => {
+export function setupStdin(callback?: () => void) {
   if (process.stdin.setRawMode) {
     process.stdin.setRawMode(true);
   }
@@ -24,4 +24,4 @@ export const setupStdin = (callback?: () => void) => {
       process.exit();
     }
   });
-};
+}
